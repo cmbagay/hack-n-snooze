@@ -50,3 +50,19 @@ function putStoriesOnPage() {
 
   $allStoriesList.show();
 }
+
+/** Submit New Story Form */
+async function submitNewStory(e) {
+  e.preventDefault();
+
+  const title = document.querySelector("#submit-title");
+  const url = document.querySelector("#submit-url");
+  const author = document.querySelector("#submit-author");
+
+  let user = currentUser.username;
+  let storyData = { title, url, author, user };
+
+  const story = await storyList.addStory(currentUser, storyData);
+}
+
+$submitForm.on("submit", submitNewStory);

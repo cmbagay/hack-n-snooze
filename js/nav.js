@@ -2,6 +2,7 @@
 
 /******************************************************************************
  * Handling navbar clicks and updating navbar
+ *
  */
 
 /** Show main list of all stories when click site name */
@@ -34,3 +35,13 @@ function updateNavOnLogin() {
   $navLogOut.show();
   $navUserProfile.text(`${currentUser.username}`).show();
 }
+
+/** navbar submit story */
+function navSubmitStoryClick(e) {
+  console.debug("navSubmitStoryClick", e);
+  hidePageComponents();
+  $allStoriesList.show();
+  $submitForm.show();
+}
+
+$navSubmitStory.on("click", navSubmitStoryClick);
