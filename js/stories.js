@@ -51,21 +51,26 @@ function putStoriesOnPage() {
   $allStoriesList.show();
 }
 
-// PART 2B stories.js addStory() FUNCTION
 async function submitStory(e) {
+  console.debug("submitStory");
   e.preventDefault();
 
-  //form info
-  const title = $("submit-title").val();
-  const url = $("submit-title").val();
-  const author = $("submit-title").val();
+  const title = $("#submit-title").val();
+  const url = $("#submit-url").val();
+  const author = $("#submit-author").val();
+  const username = currentUser.username;
 
-  const newStory = await storyList.addStory(currentUser, {
+  const story = await storyList.addStory(currentUser, {
     title,
     url,
     author,
+    username,
   });
 
-  $allStoriesList.prepend(generateStoryMarkup(newStory));
-  $("submit-form").trigger("reset");
+  const storyMarkup = generateStoryMarkup(story);
+  $allStoriesList.prepend(storyMarkup);
+
+  $submitForm.trigger("reset");
 }
+
+$submitForm.on("submit", submitStory);

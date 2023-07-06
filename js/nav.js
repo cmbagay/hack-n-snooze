@@ -14,17 +14,6 @@ function navAllStories(evt) {
 
 $body.on("click", "#nav-all", navAllStories);
 
-/** SUBMIT BUTTON */
-
-function navSubmitClick(e) {
-  console.debug("navSubmitClick", e);
-  hidePageComponents();
-  $submitForm.show();
-  putStoriesOnPage();
-}
-
-$("nav-submit").on("click", navSubmitClick);
-
 /** Show login/signup on click on "login" */
 
 function navLoginClick(evt) {
@@ -45,3 +34,11 @@ function updateNavOnLogin() {
   $navLogOut.show();
   $navUserProfile.text(`${currentUser.username}`).show();
 }
+
+function navSubmitClick(e) {
+  console.debug("navSubmitClick", e);
+  hidePageComponents();
+  $submitForm.show();
+}
+
+$navSubmit.on("click", navSubmitClick);
