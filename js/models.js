@@ -1,6 +1,6 @@
-// "use strict";
+"use strict";
 
-// const BASE_URL = "https://hack-or-snooze-v3.herokuapp.com";
+const BASE_URL = "https://hack-or-snooze-v3.herokuapp.com";
 
 /******************************************************************************
  * Story: a single story in the system
@@ -70,6 +70,7 @@ class StoryList {
    *
    * Returns the new Story instance
    */
+
   async addStory(user, { title, author, url }) {
     // SUBPART 2A: Sending Story Data to the Backend API UNIMPLEMENTED
     const token = user.loginToken;
@@ -87,6 +88,7 @@ class StoryList {
     return addedStory;
   }
 }
+
 /******************************************************************************
  * User: a user in the system (only used to represent the current user)
  */
