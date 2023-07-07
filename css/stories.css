@@ -8,6 +8,14 @@
   color: gray;
   font-size: 0.8rem;
   margin: 10px 0;
+
+  border-bottom: 1px solid lightgray;
+  padding: 10px 0px 15px 0px;
+}
+
+#favorite-stories {
+  list-style:none;
+  padding-left:15px;
 }
 
 #stories-loading-msg {
@@ -31,9 +39,25 @@
 }
 
 .story-author {
-  margin-left: 2em;
+  display:block;
+  padding-left: 30px;
+
+  color: green;
+  font-size: .75rem;
 }
 
 .story-user {
   display: block;
+  padding-left: 30px;
+
+  color: goldenrod;
+  font-size: .75rem;
+}
+
+.star{
+  margin: 0 5px;
+
+  font-size: .75rem;
+  
+  cursor: pointer;
 }

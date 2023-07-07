@@ -200,4 +200,30 @@ class User {
       return null;
     }
   }
+
+  /** FAVORITE STORY API FUNCTIONS */
+
+  async addFavoriteStory(story) {
+    this.favorites.push(story);
+    await this.addOrRemoveFavoriteStory("add", story);
+  }
+
+  async removeFavoriteStory(story) {
+    this.favorites = this.favorites.filter((s) => s.storyId !== story.storyId);
+    await this.addOrRemoveFavoriteStory("remove", story);
+  }
+
+  async addOrRemoveFavoriteStory(storyAddOrRemove, story) {
+    const token = this.loginToken;
+
+    await axios({
+      url: `${BASE_URL}/users/${this.username}/favorites/${story.storyId}`,
+      method: storyAddOrRemove === "add" ? "POST" : "DELETE",
+      data: { token },
+    });
+  }
+
+  isFavorite(story) {
+    return this.favorites.some((s) => s.storyId === story.storyId);
+  }
 }

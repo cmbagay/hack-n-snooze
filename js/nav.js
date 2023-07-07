@@ -35,6 +35,7 @@ function updateNavOnLogin() {
   $navUserProfile.text(`${currentUser.username}`).show();
 }
 
+//SUBMIT FORM CLICK
 function navSubmitClick(e) {
   console.debug("navSubmitClick", e);
   hidePageComponents();
@@ -42,3 +43,12 @@ function navSubmitClick(e) {
 }
 
 $navSubmit.on("click", navSubmitClick);
+
+//FAVORITE STORY CLICK
+function navFavoriteClick(e) {
+  console.debug("navFavoritesClick", e);
+  hidePageComponents();
+  putFavoriteStoryList();
+}
+
+$body.on("click", "#nav-fav", navFavoriteClick);

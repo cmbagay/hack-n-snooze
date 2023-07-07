@@ -23,14 +23,18 @@ function generateStoryMarkup(story) {
   // console.debug("generateStoryMarkup", story);
 
   const hostName = story.getHostName();
+  const showStar = Boolean(currentUser);
   return $(`
       <li id="${story.storyId}">
+        <div>
+        ${showStar ? starHTML(story, currentUser) : ""}
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
         </a>
         <small class="story-hostname">(${hostName})</small>
         <small class="story-author">by ${story.author}</small>
         <small class="story-user">posted by ${story.username}</small>
+        </div>
       </li>
     `);
 }
@@ -51,6 +55,7 @@ function putStoriesOnPage() {
   $allStoriesList.show();
 }
 
+/** SUBMIT STORY */
 async function submitStory(e) {
   console.debug("submitStory");
   e.preventDefault();
@@ -74,3 +79,49 @@ async function submitStory(e) {
 }
 
 $submitForm.on("submit", submitStory);
+
+/** FAVORITE STORIES */
+
+function starHTML(story, user) {
+  const isFavorite = user.isFavorite(story);
+  const starType = isFavorite ? "fas" : "far";
+
+  return `<span class="star">
+            <i class="${starType} fa-star"></i>
+          </span>`;
+}
+
+function putFavoriteStoryList() {
+  $favoriteStories.empty();
+  hidePageComponents();
+
+  for (let story of currentUser.favorites) {
+    const favStory = generateStoryMarkup(story);
+    $favoriteStories.append(favStory);
+  }
+
+  $favoriteStories.show();
+}
+
+async function toggleFavoriteStory(e) {
+  console.debug("toggleFavoriteStory");
+
+  const $target = $(e.target);
+  const storyId = $($target.closest("li")).attr("id");
+  const story = storyList.stories.find((s) => s.storyId === storyId);
+
+  //is star toggled?
+  if ($target.hasClass("fas")) {
+    //IS toggled
+    //toggledStar -> remove star and set star to notToggled
+    await currentUser.removeFavoriteStory(story);
+    $target.closest("i").toggleClass("fas far");
+  } else {
+    //NOT toggled
+    await currentUser.addFavoriteStory(story);
+    $target.closest("i").toggleClass("far fas");
+  }
+}
+
+//change star on all story lists
+$allStoriesList.on("click", ".star", toggleFavoriteStory);
