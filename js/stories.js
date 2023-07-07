@@ -19,7 +19,7 @@ async function getAndShowStoriesOnStart() {
  * Returns the markup for the story.
  */
 
-function generateStoryMarkup(story) {
+function generateStoryMarkup(story, showTrash = false) {
   // console.debug("generateStoryMarkup", story);
 
   const hostName = story.getHostName();
@@ -27,7 +27,8 @@ function generateStoryMarkup(story) {
   return $(`
       <li id="${story.storyId}">
         <div>
-        ${showStar ? starHTML(story, currentUser) : ""}
+        ${showStar ? starBtn(story, currentUser) : ""}
+        ${showTrash ? trashBtn(s) : ""}
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
         </a>
@@ -82,7 +83,7 @@ $submitForm.on("submit", submitStory);
 
 /** FAVORITE STORIES */
 
-function starHTML(story, user) {
+function starBtn(story, user) {
   const isFavorite = user.isFavorite(story);
   const starType = isFavorite ? "fas" : "far";
 
@@ -123,5 +124,19 @@ async function toggleFavoriteStory(e) {
   }
 }
 
-//change star on all story lists
 $allStoriesList.on("click", ".star", toggleFavoriteStory);
+
+//trash story
+function trashBtn() {
+  return `<span class=trash-can>
+            <i class="fas fa-trash-alt"></i>
+          </span>`;
+}
+
+async function trashStory(e) {
+  console.debug("trashStory");
+
+  const storyId = $($(e.target).closest("li")).attr("id");
+
+  await storyList.removeStory(currentUser, storyId);
+}
