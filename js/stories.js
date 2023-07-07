@@ -128,7 +128,7 @@ $allStoriesList.on("click", ".star", toggleFavoriteStory);
 
 //trash story
 function trashBtn() {
-  return `<span class=trash-can>
+  return `<span class=trash>
             <i class="fas fa-trash-alt"></i>
           </span>`;
 }
